@@ -21,14 +21,25 @@ Los script ordendados son como sigue:
 * mapper_sort.py
 * reducer.py
 
+Agregue un script para correr todos los ["script.py"](code/punto-1/scripts.py) juntos. 
 
 #### b) Produzca un mapper y un reducer para obtener la cantidad de productos vendidos por cada vendedor, agrupado por coordinador.
 
-agrego un diagrama explicativo del algoritmo. 
+Agrego un diagrama explicativo del algoritmo. 
 
 ![algoritmo punto 2](imgs/diagrama_flujo_punto2-map_reducer.png)
 
-Agregue un script para correr todos los scripts juntos. "script.py"
+
+[punto 2](code/punto-2)
+
+Agregue un script para correr todos los ["script.py"](code/punto-2/scripts.py) juntos. 
+
+#### Apache Spark con PySpark: Resuelva el ejercicio anterior con PySpark.
+
+Adjunto el enlace [Enlace Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing)
+
+Comentario: No consegui hacer la agrupacion por "id_coordinador". 
+
 
 
 
