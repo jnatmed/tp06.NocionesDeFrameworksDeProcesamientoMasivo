@@ -15,6 +15,8 @@ file_hdfs = open("code/punto-2/f_ventas_result_1.txt")
 
 f_vendedor_ventas = open("code/punto-2/f_reducer_sorted.txt", "w")
 
+f_vendedor_ventas.write("ID_COORDINADOR  ID_VENDEDOR  TOTAL_VENDIDO\n")
+
 for line in sorted(file_hdfs, key=convertir_id):
     f_vendedor_ventas.write(line)
 
