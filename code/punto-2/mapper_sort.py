@@ -2,12 +2,15 @@
 """mapper_sort.py"""
 
 import sys
-
+import pdb
 
 def convertir_id(line):
     line = line.strip()
     linea_split = []
-    linea_split = line.split("\t")    
+    linea_split = line.split("\t") 
+    # PARTE IMPORTANTE DEL SORT, SELECCIONO LA COLUMNA POR LA CUAL
+    # QUIERO ORDENAR, EN ESTE CASO COLUMNA ID_VENDEDOR
+    # PARA DESPUES HACER EL ACUMULADOR DE CANT_VENTAS_REALIZADAS 
     return int(linea_split[1])
 
 # Abro el archivo ventas_part1.txt

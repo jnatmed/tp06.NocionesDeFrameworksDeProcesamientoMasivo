@@ -17,7 +17,7 @@ for line in file_hdfs:
     # cada linea tiene exactamente 4 palabras
     (id_vendedor, id_coordinador, cant_prod_vendidos, total_venta) = line.split("\t")
 
-    f_vendedor_ventas.write(id_coordinador + "\t" + id_vendedor + "\t" + cant_prod_vendidos + "\n")
+    f_vendedor_ventas.write(id_coordinador  + "\t" + id_vendedor + "\t" + cant_prod_vendidos + "\n")
 
 file_hdfs.close()
 f_vendedor_ventas.close()

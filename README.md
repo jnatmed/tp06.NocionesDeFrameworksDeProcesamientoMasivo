@@ -12,16 +12,14 @@ agrego un diagrama explicativo de los algortimos para la resolucion del punto.
 
 ![algoritmo punto 1](imgs/diagrama_flujo_punto1-map_reducer.png)
 
-* En la primera parte el "mapper.py": armo los pares {llave, valor}
-* Luego en "mapper_sort.py" los ordeno: paso importante para luego poder hace el reducer.
-* En "reducer.py": voy comparando linea a linea y cuando el "id_vendedor" cambia renuevo el contador y guardo en un archivo de salida "f_ventas_result.py"
-
 Los script ordendados son como sigue: 
-* mapper.py
-* mapper_sort.py
-* reducer.py
+* mapper.py : en esta parte creo la estructura {clave valor}, falta ordenar.. 
+* mapper_sort.py : aqui ordeno por id_vendedor, quedandome como resultado una estructura que falta reducir.
+* reducer.py : voy comparando linea a linea y cuando el "id_vendedor" cambia renuevo el contador y guardo en un archivo de salida "f_ventas_result.py". 
 
-Agregue un script para correr todos los ["script.py"](code/punto-1/scripts.py) juntos. 
+Enlace a la carpeta con los script y archivos resultantes [Punto 1](code/punto-1)
+
+Agregue un script para correr todos los ["script.py"](code/punto-1/scripts.py) juntos y en orden. 
 
 #### b) Produzca un mapper y un reducer para obtener la cantidad de productos vendidos por cada vendedor, agrupado por coordinador.
 
@@ -29,18 +27,59 @@ Agrego un diagrama explicativo del algoritmo.
 
 ![algoritmo punto 2](imgs/diagrama_flujo_punto2-map_reducer.png)
 
+Los pasos son como siguen: 
 
-[punto 2](code/punto-2)
+* mapper.py : en esta parte armo el esquema {id_coordinador, id_vendedor, cant_prod_vendidos}, aun no sumo los totales por vendedor. Como salida tengo una lista, con la estructura [id_coordinador, id_vendedor, cant_prod_vendidos]
 
-Agregue un script para correr todos los ["script.py"](code/punto-2/scripts.py) juntos. 
+* mapper_sort.py : aqui ordeno por vendedor quedandome de esta forma 
+
+![ventas_sorted](imgs/f_ventas_sorted.png)
+
+en este algoritmo la parte mas importante es la de ordenamiento..
+
+```
+def convertir_id(line):
+    line = line.strip()
+    linea_split = []
+    linea_split = line.split("\t") 
+    # PARTE IMPORTANTE DEL SORT, SELECCIONO LA COLUMNA POR LA CUAL
+    # QUIERO ORDENAR, EN ESTE CASO COLUMNA ID_VENDEDOR
+    # PARA DESPUES HACER EL ACUMULADOR DE CANT_VENTAS_REALIZADAS 
+    return int(linea_split[1])
+``` 
+Retornando la columna por la cual quiero ordenar. Luego el ciclo for hace el resto..
+
+* reducer.py: En esta parte sumo los subtotales de productos vendidos por vendedor quedando el resultado como sigue
+
+![f_ventas_result_1](imgs/f_ventas_result_1.png)
+
+aca tengo los vendedores con los totales vendidos. Ahora me falta hacer un orden por vendedor. 
+
+* reducer_sort.py: aplico el mismo paso de ordenamiento realizado en el "mapper_sorted" pero para ordenar por coordinador
+
+![f_reducer_sorted](imgs/f_reducer_sorted.png)
+
+Enlace a la carpeta con los script y archivos resultantes [Punto 2](code/punto-2)
+
+Agregue un script para correr todos los ["script.py"](code/punto-2/scripts.py) juntos y en orden. 
 
 #### Apache Spark con PySpark: Resuelva el ejercicio anterior con PySpark.
 
-Adjunto el enlace [Enlace Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing)
+La parte mas importante de la consigna es como sigue
 
-Comentario: No consegui hacer la agrupacion por "id_coordinador". 
+```
+RDD_ventas = sc.textFile("/content/ventas.txt").\
+           map(lambda line: line.split("\t")).\
+           map(lambda d: (int(d[0]), int(d[2]) )).\
+           reduceByKey(lambda x, y: x + y)
 
+RDD_ventas.sortByKey().collect() 
+``` 
 
+De lo que se obtiene todos los vendedores ordenados y con el total de productos vendidos. 
 
+Me queda por concluir, poder agrupar los vendedores por coordinador. Aun estoy trabajando en ello. 
+
+Adjunto el enlace al [Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing)
 
 
