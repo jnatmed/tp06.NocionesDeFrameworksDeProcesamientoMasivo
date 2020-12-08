@@ -80,6 +80,8 @@ De lo que se obtiene todos los vendedores ordenados y con el total de productos 
 
 Me queda por concluir, poder agrupar los vendedores por coordinador. Aun estoy trabajando en ello. 
 
+Otra complicacion que me surgio fue el acceso al archivo "ventas.txt" mediante el metodo wget. Me recupera el archivo de texo pero con formato html en vez del contenido del archivo en si. Opte por tener que subir el archivo manualmente. Esa sera una tarea mas a realizar al momento de ejecutar el script. 
+
 Adjunto el enlace al [Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing)
 
 
