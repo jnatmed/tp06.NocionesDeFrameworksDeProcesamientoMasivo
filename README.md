@@ -68,20 +68,32 @@ Agregue un script para correr todos los ["script.py"](code/punto-2/scripts.py) j
 La parte mas importante de la consigna es como sigue
 
 ```
+!wget https://raw.githubusercontent.com/bdm-unlu/2020/master/TPs/TP06/data/ventas.txt
+
 RDD_ventas = sc.textFile("/content/ventas.txt").\
            map(lambda line: line.split("\t")).\
-           map(lambda d: (int(d[0]), int(d[2]) )).\
+           map(lambda d: (int(d[0]), float(d[3]) )).\
            reduceByKey(lambda x, y: x + y)
 
-RDD_ventas.sortByKey().collect() 
+RDD_ventas2 = RDD_ventas.map(lambda d: (int(d[0]), float(d[1])*0.03))
+
+RDD_ventas2.sortByKey().collect()
 ``` 
 
 De lo que se obtiene todos los vendedores ordenados y con el total de productos vendidos. 
 
 Me queda por concluir, poder agrupar los vendedores por coordinador. Aun estoy trabajando en ello. 
 
-Otra complicacion que me surgio fue el acceso al archivo "ventas.txt" mediante el metodo wget. Me recupera el archivo de texo pero con formato html en vez del contenido del archivo en si. Opte por tener que subir el archivo manualmente. Esa sera una tarea mas a realizar al momento de ejecutar el script. 
+Inconvenientes solucionados:
 
-Adjunto el enlace al [Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing)
+* La lectura del archivo, le faltaba la lectura tipo raw
+* Agregada la instruccion para que se multiplique el 3% de las ventas. 
+
+
+```
+RDD_ventas2 = RDD_ventas.map(lambda d: (int(d[0]), float(d[1])*0.03))
+```
+
+Adjunto el enlace al [Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing) Actualizado
 
 
