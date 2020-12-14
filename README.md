@@ -79,10 +79,7 @@ RDD_ventas2 = RDD_ventas.map(lambda d: (int(d[0]), float(d[1])*0.03))
 
 RDD_ventas2.sortByKey().collect()
 ``` 
-
 De lo que se obtiene todos los vendedores ordenados y con el total de productos vendidos. 
-
-Me queda por concluir, poder agrupar los vendedores por coordinador. Aun estoy trabajando en ello. 
 
 Inconvenientes solucionados:
 
@@ -94,6 +91,34 @@ Inconvenientes solucionados:
 RDD_ventas2 = RDD_ventas.map(lambda d: (int(d[0]), float(d[1])*0.03))
 ```
 
+
+## Luego del punto 2, realice la siguiente resolucion en colab. Primero obtuve 2 RDD, 
+* Uno con los vendedores y sus totales de productos vendidos
+
+```
+RDD_ventas_cant_product = scventas.textFile("/content/ventas.txt").\
+           map(lambda line: line.split("\t")).\
+           map(lambda d: (int(d[0]), int(d[2]) )).\
+           reduceByKey(lambda x, y: x + y)
+
+RDD_ventas_cant_product = RDD_ventas_cant_product.map(lambda d: (int(d[0]), [int(d[1])]))
+
+RDD_ventas_cant_product.sortByKey().collect()
+```
+
+* Otro RDD con los vendedores y coordinadores
+
+```
+RDD_ventas_coord = scventas.textFile("/content/ventas.txt").\
+           map(lambda line: line.split("\t")).\
+           map(lambda d: (int(d[0]), int(d[1]) ))
+
+```
+* Y finalmente realizando una union entre los RDD obtenidos
+
+```
+
+RDD_ventas_coord.union(RDD_ventas_cant_product).reduceByKey(lambda x, y: x + y).sortByKey().collect()
+```
+
 Adjunto el enlace al [Colab](https://colab.research.google.com/drive/1G8CdO2QuCeRk_8n1OyrytgpC420aiT8z?usp=sharing) Actualizado
-
-
